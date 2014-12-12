@@ -1,10 +1,12 @@
 package builders;
 
+import static java.util.Arrays.*;
 import static org.apache.commons.lang.builder.EqualsBuilder.*;
 import static org.apache.commons.lang.builder.HashCodeBuilder.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 import org.junit.Test;
 
@@ -15,7 +17,8 @@ public class ProductBuilderTest {
         Product product = new Product(1L, "pencil", "sharp one",
                 new Supplier("Pentel",
                         new Address("Osielsko", "pomorskie")),
-                new Price(BigDecimal.valueOf(5L), "PLN"));
+                asList(new Price(BigDecimal.valueOf(5L), "PLN"),
+                        new Price(BigDecimal.valueOf(1L), "EUR")));
 
         assertThat(product).isEqualTo(pencil());
     }
@@ -39,7 +42,8 @@ public class ProductBuilderTest {
         return new Product(1L, "pencil", "sharp one",
                 new Supplier("Pentel",
                         new Address("Osielsko", "pomorskie")),
-                new Price(BigDecimal.valueOf(5L), "PLN"));
+                asList(new Price(BigDecimal.valueOf(5L), "PLN"),
+                        new Price(BigDecimal.valueOf(1L), "EUR")));
     }
 
     static class Product {
@@ -52,9 +56,9 @@ public class ProductBuilderTest {
 
         private Supplier supplier;
 
-        private Price price;
+        private Collection<Price> price;
 
-        public Product(Long id, String name, String description, Supplier supplier, Price price) {
+        public Product(Long id, String name, String description, Supplier supplier, Collection<Price> price) {
             this.id = id;
             this.name = name;
             this.description = description;
